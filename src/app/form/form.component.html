@@ -1,0 +1,105 @@
+<h1 id="header">Employee ID Card Form</h1>
+<form class="container" [formGroup]="form">
+  <div>
+    <label for="firstName" id="lfname">First Name</label>
+    <input type="text" class="form-control" formControlName="firstName" name="firstName" id="firstName">
+    <div *ngIf="firstName.touched && firstName.invalid" id="firstNameError" class="spanHide alert alert-danger">
+      First Name is Required
+    </div>
+  </div>
+  <br>
+  <div>
+    <label for="fullName">Full Name</label>
+    <input type="text" class="form-control" name="fullName" formControlName="fullName" id="fullName">
+    <div *ngIf="fullname.touched && fullname.invalid" id="fullNameError" class="spanHide alert alert-danger">
+      Full Name is Required
+    </div>
+  </div>
+  <br>
+  <div>
+    <label for="designation">Designation</label>
+
+    <select name="designation" class="form-control" id="designation" formControlName="designation">
+      <option value=""></option>
+      <option value="Associate Engineer">Associate Engineer</option>
+      <option value="Resource Manager">Resource Manager</option>
+      <option value="HR Manager">HR Manager</option>
+      <option value="Team Leader">Team Leader</option>
+    </select>
+
+    <div id="designationError" class="spanHide alert alert-danger" *ngIf="designation.touched && designation.invalid">
+      Select Designation
+    </div>
+  </div>
+  <br>
+  <div>
+    <label for="empcode">Employee Code</label>
+    <input type="text" class="form-control" autocomplete="off" name="empcode" id="empcode" formControlName="empcode">
+    <div *ngIf="empcode.touched && empcode.errors.required" class="alert alert-danger">
+      Employee Code is required
+    </div>
+  
+    <div *ngIf="empcode.touched && empcode.errors.pattern" class="spanHide alert alert-danger">
+      Employee Code should start with 8 or 6 and contain 7 digits
+    </div>
+  </div>
+  <br>
+  <div>
+    <label for="bloodGroup">Blood Group</label>
+    <select name="bloodGroup" class="form-control" formControlName="bloodGroup" id="bloodGroup">
+      <option value="A+ve">A+ve</option>
+      <option value="A1+ve">A1+ve</option>
+      <option value="B+ve">B+ve</option>
+      <option value="B-ve">B-ve</option>
+      <option value="O+ve">O+ve</option>
+    </select>
+    <div class="spanHide alert alert-danger" *ngIf="bloodGroup.touched && bloodGroup.invalid">
+      Select Blood Group
+    </div>
+  </div>
+  <br>
+  <div>
+    <label for="joiningDate">Joining Date</label>
+    <input type="date" class="form-control" id="joiningDate">
+    <span id="dateError" class="spanHide"></span>
+  </div>
+  <br>
+
+  <div>
+    <label for="email">Email(virtusa)</label>
+    <input type="email" class="form-control" name="email" id="email" formControlName="email">
+    <div *ngIf="email.touched && email.errors.required" class="alert alert-danger">
+      Email is Required
+    </div>
+    
+    <div *ngIf="email.touched && email.errors">
+      <div *ngIf="email.errors.pattern" class="alert alert-danger">
+        Enter Virtusa ID
+      </div>
+    </div>
+  </div>
+  <br>
+
+  <div [formGroup]="form.get('contact')">
+    <div>
+      <label for="mobileNumber">Mobile Number</label>
+      <input type="text" class="form-control" name="mobileNumber" formControlName="mobileNumber" id="mobileNumber">
+    </div>
+    <div id="mobnumerror" class="spanHide" *ngIf="contact.get('mobileNumber').touched && contact.get('emergencyNumber').touched && contact.invalid">
+      <div class="alert alert-danger" *ngIf="contact.get('mobileNumber').errors.atleastOneMobNum">Mobile is not empty</div>
+      <div class="alert alert-danger" *ngIf="contact.get('mobileNumber').errors.pattern">Not a Valid Number</div>
+    </div>
+    <br>
+    <div>
+      <label for="emergencyNumber">Emergency Number</label>
+      <input type="text" class="form-control" name="emergencyNumber" formControlName="emergencyNumber" id="emergencyNumber">
+    </div>
+    <div id="emernumerror" class="spanHide" *ngIf="contact.get('mobileNumber').touched && contact.get('emergencyNumber').touched  && contact.invalid">
+      <div class="alert alert-danger" *ngIf="contact.get('emergencyNumber').errors.atleastOneMobNum">Fill either mobile number or emergency number</div>
+      <div class="alert alert-danger" *ngIf="contact.get('emergencyNumber').errors.pattern">Not a Valid Number</div>
+    </div>
+    <br>
+    <br>
+  </div>
+  <button type="submit" class="btn btn-success" id="submit" [disabled]="form.invalid" onClick="formSubmit()">Submit</button>
+</form>
